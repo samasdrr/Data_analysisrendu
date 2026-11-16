@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Power BI — Performance Rayon Frais</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --pbi-bg: #f3f2f1;
+      --pbi-card: #ffffff;
+      --pbi-border: #edebe9;
+      --pbi-blue: #118dff;
+      --pbi-dark-blue: #004b87;
+      --pbi-gray: #605e5c;
+      --pbi-light-gray: #a19f9d;
+      --pbi-red: #d83b01;
+      --pbi-green: #107c41;
+      --pbi-text: #201f1e;
+      --pbi-header-bg: #2b579a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif; }
+    body { background-color: var(--pbi-bg); color: var(--pbi-text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Top Ribbon style Power BI */
+    .pbi-navbar { background: #252423; color: #fff; padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f2c811; }
+    .pbi-logo { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
+    .pbi-logo-icon { background: #f2c811; color: #000; padding: 2px 7px; border-radius: 3px; font-weight: 900; font-size: 0.85rem; }
+    .pbi-meta { font-size: 0.82rem; color: #c8c6c4; display: flex; gap: 16px; align-items: center; }
+
+    /* Slicer Bar (Filtres interactifs Power BI) */
+    .slicer-container { background: #ffffff; border-bottom: 1px solid var(--pbi-border); padding: 10px 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .slicer-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--pbi-gray); margin-right: 4px; }
+    .slicer-btn { background: #f3f2f1; border: 1px solid #d2d0ce; padding: 5px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; cursor: pointer; color: #323130; transition: all 0.15s; }
+    .slicer-btn:hover { background: #edebe9; }
+    .slicer-btn.active { background: var(--pbi-blue); color: #ffffff; border-color: var(--pbi-blue); box-shadow: 0 1px 3px rgba(17,141,255,0.3); }
+
+    /* Main Container */
+    .dashboard-container { padding: 18px 24px; flex-grow: 1; display: flex; flex-direction: column; gap: 16px; }
+
+    /* Row 1: KPI Cards */
+    .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    @media (max-width: 1100px) { .kpi-row { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) { .kpi-row { grid-template-columns: 1fr 1fr; } }
+
+    .kpi-card { background: var(--pbi-card); border: 1px solid var(--pbi-border); border-radius: 4px; padding: 14px 16px; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between; }
+    .kpi-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--pbi-gray); letter-spacing: 0.02em; }
+    .kpi-val { font-size: 2rem; font-weight: 700; color: #201f1e; margin: 4px 0; line-height: 1; }
+    .kpi-footer { font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .val-up { color: var(--pbi-green); }
+    .val-down { color: var(--pbi-red); }
+
+    /* Visuals Grid: 4 Graphiques équilibrés */
+    .charts-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; }
+    @media (max-width: 1000px) { .charts-grid { grid-template-columns: 1fr; } }
+
+    .visual-card { background: var(--pbi-card); border: 1px solid var(--pbi-border); border-radius: 4px; padding: 14px 16px; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+    .visual-header { font-size: 0.88rem; font-weight: 700; color: #201f1e; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f3f2f1; padding-bottom: 6px; }
+    .visual-body { position: relative; flex-grow: 1; min-height: 250px; }
+
+    /* Bottom Matrix / Table */
+    .table-container { background: var(--pbi-card); border: 1px solid var(--pbi-border); border-radius: 4px; padding: 14px 16px; box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.08); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    th { background: #f3f2f1; color: var(--pbi-gray); font-weight: 700; text-transform: uppercase; font-size: 0.72rem; padding: 8px 12px; text-align: left; border-bottom: 2px solid #d2d0ce; }
+    td { padding: 9px 12px; border-bottom: 1px solid #edebe9; color: #201f1e; font-weight: 500; }
+    tr:hover td { background-color: #f8f9fa; }
+    .text-right { text-align: right; }
+    .bold { font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <!-- POWER BI NAVBAR -->
+  <nav class="pbi-navbar">
+    <div class="pbi-logo">
+      <span class="pbi-logo-icon">PBI</span>
+      <span>Rapport Frais — Comex Performance Dashboard</span>
+    </div>
+    <div class="pbi-meta">
+      <span>Période : <strong>Juil 2022 - Juin 2023 (N vs N-1)</strong></span>
+      <span>Source : <strong>878 503 lignes</strong></span>
+    </div>
+  </nav>
+
+  <!-- POWER BI SLICER BAR -->
+  <div class="slicer-container">
+    <span class="slicer-label">Filtre Catégorie :</span>
+    <button class="slicer-btn active" onclick="filterCategory('All')">Toutes les Catégories</button>
+    <button class="slicer-btn" onclick="filterCategory('Flower/Leaf Vegetables')">Flower/Leaf</button>
+    <button class="slicer-btn" onclick="filterCategory('Capsicum')">Capsicum</button>
+    <button class="slicer-btn" onclick="filterCategory('Edible Mushroom')">Champignons</button>
+    <button class="slicer-btn" onclick="filterCategory('Cabbage')">Choux</button>
+    <button class="slicer-btn" onclick="filterCategory('Aquatic Tuberous Vegetables')">Tubercules</button>
+    <button class="slicer-btn" onclick="filterCategory('Solanum')" style="color: var(--pbi-red);">Solanum ⚠️</button>
+  </div>
+
+  <!-- DASHBOARD MAIN CANVAS -->
+  <div class="dashboard-container">
+
+    <!-- 5 KPI TILES POWER BI (CHIFFRES TRES VISIBLES) -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-title">CA Net (RMB)</div>
+        <div class="kpi-val" id="kpi-ca">1 154 272</div>
+        <div class="kpi-footer val-up" id="kpi-ca-ev">▲ +24.2% vs N-1</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">Volume Vendu (kg)</div>
+        <div class="kpi-val" id="kpi-vol">191 900</div>
+        <div class="kpi-footer val-up" id="kpi-vol-ev">▲ +66.3% vs N-1</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">Marge Brute (RMB)</div>
+        <div class="kpi-val" id="kpi-mg">446 802</div>
+        <div class="kpi-footer" style="color: var(--pbi-blue);" id="kpi-mg-rate">Taux Marge : 38.7%</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title">Marge Nette (RMB)</div>
+        <div class="kpi-val" id="kpi-net">383 762</div>
+        <div class="kpi-footer val-up" id="kpi-net-rate">Taux Net : 33.2%</div>
+      </div>
+
+      <div class="kpi-card" style="border-left: 3px solid var(--pbi-red);">
+        <div class="kpi-title" style="color: var(--pbi-red);">Casse / Démarque (RMB)</div>
+        <div class="kpi-val" style="color: var(--pbi-red);" id="kpi-loss">63 040</div>
+        <div class="kpi-footer val-down" id="kpi-loss-pct">▼ 5.46% du CA</div>
+      </div>
+    </div>
+
+    <!-- GRILLE DE 4 VISUELS POWER BI -->
+    <div class="charts-grid">
+      
+      <!-- VISUEL 1 : CA PÉRIODE N VS N-1 PAR CATÉGORIE -->
+      <div class="visual-card">
+        <div class="visual-header">
+          <span>CA N vs N-1 par Catégorie (RMB)</span>
+          <span style="font-size: 0.75rem; color: var(--pbi-gray);">Histogramme Groupé</span>
+        </div>
+        <div class="visual-body">
+          <canvas id="chartCatCA"></canvas>
+        </div>
+      </div>
+
+      <!-- VISUEL 2 : TENDANCE MENSUELLE DU CA (N vs N-1) -->
+      <div class="visual-card">
+        <div class="visual-header">
+          <span>Tendance Mensuelle du CA (12 Mois N vs N-1)</span>
+          <span style="font-size: 0.75rem; color: var(--pbi-gray);">Courbe d'Évolution</span>
+        </div>
+        <div class="visual-body">
+          <canvas id="chartTrend"></canvas>
+        </div>
+      </div>
+
+      <!-- VISUEL 3 : PERTES / CASSE FINANCIÈRE PAR CATÉGORIE -->
+      <div class="visual-card">
+        <div class="visual-header">
+          <span>Coût Financier de la Casse par Catégorie (RMB)</span>
+          <span style="font-size: 0.75rem; color: var(--pbi-gray);">Barres Horizontales</span>
+        </div>
+        <div class="visual-body">
+          <canvas id="chartLoss"></canvas>
+        </div>
+      </div>
+
+      <!-- VISUEL 4 : RÉPARTITION DES VOLUMES PAR CATÉGORIE -->
+      <div class="visual-card">
+        <div class="visual-header">
+          <span>Part des Volumes Vendus (kg)</span>
+          <span style="font-size: 0.75rem; color: var(--pbi-gray);">Donut Visuel</span>
+        </div>
+        <div class="visual-body">
+          <canvas id="chartVol"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TABLEAU POWER BI DE DÉTAIL -->
+    <div class="table-container">
+      <div class="visual-header">
+        <span>Matrice de Synthèse par Catégorie</span>
+        <span style="font-size: 0.75rem; color: var(--pbi-gray);">Données Période N (12 mois)</span>
+      </div>
+      <table id="categoryTable">
+        <thead>
+          <tr>
+            <th>Catégorie</th>
+            <th class="text-right">CA N (RMB)</th>
+            <th class="text-right">CA N-1 (RMB)</th>
+            <th class="text-right">Évol CA</th>
+            <th class="text-right">Volume (kg)</th>
+            <th class="text-right">Évol Vol</th>
+            <th class="text-right">Taux Marge</th>
+            <th class="text-right">Casse (RMB)</th>
+            <th class="text-right">Marge Nette (RMB)</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Injecté par JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- LOGIQUE POWER BI & CHART.JS -->
+  <script>
+    // Dataset complet vérifié
+    const catData = [
+      { name: "Flower/Leaf Vegetables", ca_n: 360042, ca_n1: 307379, vol_n: 78898, vol_n1: 48074, mg_pct: 40.7, loss: 21522, net: 124935 },
+      { name: "Capsicum", ca_n: 255860, ca_n1: 209633, vol_n: 43417, vol_n1: 21480, mg_pct: 43.1, loss: 11825, net: 98337 },
+      { name: "Edible Mushroom", ca_n: 214752, ca_n1: 150006, vol_n: 32533, vol_n1: 16251, mg_pct: 35.9, loss: 9341, net: 67732 },
+      { name: "Cabbage", ca_n: 138240, ca_n1: 92274, vol_n: 14928, vol_n1: 9764, mg_pct: 36.2, loss: 8272, net: 41743 },
+      { name: "Aquatic Tuberous Vegetables", ca_n: 135702, ca_n1: 97913, vol_n: 16611, vol_n1: 11820, mg_pct: 32.2, loss: 10175, net: 33532 },
+      { name: "Solanum", ca_n: 49676, ca_n1: 72514, vol_n: 5513, vol_n1: 7970, mg_pct: 39.0, loss: 1905, net: 17485 }
+    ];
+
+    const monthlyTrend = {
+      labels: ['Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Déc', 'Janv', 'Févr', 'Mars', 'Avr', 'Mai', 'Juin'],
+      ca_n: [91661, 119017, 112141, 119405, 73256, 75690, 156732, 91944, 91558, 74779, 77993, 70095],
+      ca_n1: [83137, 108695, 91217, 84694, 57670, 58704, 114624, 80479, 75970, 66158, 55438, 52933]
+    };
+
+    let chartCatCA, chartTrend, chartLoss, chartVol;
+
+    function renderTable(filterName = 'All') {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      const list = (filterName === 'All') ? catData : catData.filter(c => c.name === filterName);
+
+      list.forEach(c => {
+        const evol_ca = ((c.ca_n - c.ca_n1) / c.ca_n1 * 100).toFixed(1);
+        const evol_vol = ((c.vol_n - c.vol_n1) / c.vol_n1 * 100).toFixed(1);
+        const isSol = (c.name === 'Solanum');
+        const tr = document.createElement('tr');
+        if (isSol) tr.style.backgroundColor = '#fff0ed';
+
+        tr.innerHTML = `
+          <td class="bold" style="${isSol ? 'color:#d83b01;' : ''}">${c.name} ${isSol ? '⚠️' : ''}</td>
+          <td class="text-right bold">${c.ca_n.toLocaleString()}</td>
+          <td class="text-right">${c.ca_n1.toLocaleString()}</td>
+          <td class="text-right bold" style="color: ${evol_ca >= 0 ? '#107c41' : '#d83b01'}">${evol_ca >= 0 ? '+' : ''}${evol_ca}%</td>
+          <td class="text-right">${c.vol_n.toLocaleString()}</td>
+          <td class="text-right" style="color: ${evol_vol >= 0 ? '#107c41' : '#d83b01'}">${evol_vol >= 0 ? '+' : ''}${evol_vol}%</td>
+          <td class="text-right">${c.mg_pct}%</td>
+          <td class="text-right bold" style="color: #d83b01;">${c.loss.toLocaleString()}</td>
+          <td class="text-right bold">${c.net.toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function initCharts() {
+      // 1. Chart CA N vs N-1
+      const ctx1 = document.getElementById('chartCatCA').getContext('2d');
+      chartCatCA = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: catData.map(c => c.name.replace(' Vegetables', '')),
+          datasets: [
+            {
+              label: 'CA N (RMB)',
+              data: catData.map(c => c.ca_n),
+              backgroundColor: catData.map(c => c.name === 'Solanum' ? '#d83b01' : '#118dff'),
+              borderRadius: 3
+            },
+            {
+              label: 'CA N-1 (RMB)',
+              data: catData.map(c => c.ca_n1),
+              backgroundColor: '#a19f9d',
+              borderRadius: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { ticks: { callback: v => (v/1000) + 'k' }, grid: { color: '#f3f2f1' } },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } }
+          }
+        }
+      });
+
+      // 2. Chart Trend
+      const ctx2 = document.getElementById('chartTrend').getContext('2d');
+      chartTrend = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: monthlyTrend.labels,
+          datasets: [
+            {
+              label: 'Période N (Juil 22 - Juin 23)',
+              data: monthlyTrend.ca_n,
+              borderColor: '#118dff',
+              backgroundColor: 'rgba(17, 141, 255, 0.1)',
+              fill: true,
+              tension: 0.25,
+              borderWidth: 2.5,
+              pointRadius: 3
+            },
+            {
+              label: 'Période N-1 (Juil 21 - Juin 22)',
+              data: monthlyTrend.ca_n1,
+              borderColor: '#8a8886',
+              borderDash: [4, 4],
+              tension: 0.25,
+              borderWidth: 2,
+              pointRadius: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { ticks: { callback: v => (v/1000) + 'k' }, grid: { color: '#f3f2f1' } },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } }
+          }
+        }
+      });
+
+      // 3. Chart Loss Bar
+      const ctx3 = document.getElementById('chartLoss').getContext('2d');
+      chartLoss = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+          labels: ['Flower/Leaf', 'Capsicum', 'Aquatic Tuber.', 'Edible Mushroom', 'Cabbage', 'Solanum'],
+          datasets: [{
+            label: 'Coût Casse (RMB)',
+            data: [21522, 11825, 10175, 9341, 8272, 1905],
+            backgroundColor: ['#d83b01', '#e66c37', '#e66c37', '#e66c37', '#e66c37', '#a19f9d'],
+            borderRadius: 3
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { callback: v => (v/1000) + 'k' }, grid: { color: '#f3f2f1' } },
+            y: { grid: { display: false } }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+
+      // 4. Chart Vol Donut
+      const ctx4 = document.getElementById('chartVol').getContext('2d');
+      chartVol = new Chart(ctx4, {
+        type: 'doughnut',
+        data: {
+          labels: catData.map(c => c.name.replace(' Vegetables', '')),
+          datasets: [{
+            data: catData.map(c => c.vol_n),
+            backgroundColor: ['#118dff', '#12239e', '#00b7c3', '#e66c37', '#f2c811', '#d83b01'],
+            borderWidth: 1,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          plugins: {
+            legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10.5 }, padding: 6 } }
+          }
+        }
+      });
+    }
+
+    function filterCategory(catName) {
+      document.querySelectorAll('.slicer-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (catName === 'All') {
+        document.getElementById('kpi-ca').innerText = '1 154 272';
+        document.getElementById('kpi-ca-ev').innerText = '▲ +24.2% vs N-1';
+        document.getElementById('kpi-vol').innerText = '191 900';
+        document.getElementById('kpi-vol-ev').innerText = '▲ +66.3% vs N-1';
+        document.getElementById('kpi-mg').innerText = '446 802';
+        document.getElementById('kpi-mg-rate').innerText = 'Taux Marge : 38.7%';
+        document.getElementById('kpi-net').innerText = '383 762';
+        document.getElementById('kpi-loss').innerText = '63 040';
+        document.getElementById('kpi-loss-pct').innerText = '▼ 5.46% du CA';
+      } else {
+        const item = catData.find(c => c.name === catName);
+        if (item) {
+          const ev_ca = ((item.ca_n - item.ca_n1) / item.ca_n1 * 100).toFixed(1);
+          const ev_vol = ((item.vol_n - item.vol_n1) / item.vol_n1 * 100).toFixed(1);
+          const loss_pct = (item.loss / item.ca_n * 100).toFixed(1);
+          
+          document.getElementById('kpi-ca').innerText = item.ca_n.toLocaleString();
+          document.getElementById('kpi-ca-ev').innerText = `${ev_ca >= 0 ? '▲ +' : '▼ '}${ev_ca}% vs N-1`;
+          document.getElementById('kpi-ca-ev').className = `kpi-footer ${ev_ca >= 0 ? 'val-up' : 'val-down'}`;
+          
+          document.getElementById('kpi-vol').innerText = item.vol_n.toLocaleString();
+          document.getElementById('kpi-vol-ev').innerText = `${ev_vol >= 0 ? '▲ +' : '▼ '}${ev_vol}% vs N-1`;
+          
+          document.getElementById('kpi-mg').innerText = Math.round(item.ca_n * item.mg_pct / 100).toLocaleString();
+          document.getElementById('kpi-mg-rate').innerText = `Taux Marge : ${item.mg_pct}%`;
+          
+          document.getElementById('kpi-net').innerText = item.net.toLocaleString();
+          document.getElementById('kpi-loss').innerText = item.loss.toLocaleString();
+          document.getElementById('kpi-loss-pct').innerText = `▼ ${loss_pct}% du CA`;
+        }
+      }
+      renderTable(catName);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      renderTable();
+      initCharts();
+    });
+  </script>
+
+</body>
+</html>

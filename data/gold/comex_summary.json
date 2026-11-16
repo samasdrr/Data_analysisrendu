@@ -1,0 +1,283 @@
+{
+  "execution_date": "2026-11-15T22:45:31.782841",
+  "total_transactions_processed": 878503,
+  "kpi_categories": [
+    {
+      "category": "Aquatic Tuberous Vegetables",
+      "ca_n_rmb": 135701.85,
+      "ca_n1_rmb": 97913.05,
+      "evol_ca_pct": 38.59,
+      "diff_ca_rmb": 37788.8,
+      "vol_n_kg": 16611.31,
+      "vol_n1_kg": 11820.43,
+      "evol_vol_pct": 40.53,
+      "diff_vol_kg": 4790.88,
+      "gross_margin_rmb": 43706.15,
+      "gross_margin_rate_pct": 32.21,
+      "loss_cost_rmb": 10174.54,
+      "net_margin_rmb": 33531.54,
+      "net_margin_rate_pct": 24.71,
+      "discount_rate_pct": 6.6
+    },
+    {
+      "category": "Cabbage",
+      "ca_n_rmb": 138240.46,
+      "ca_n1_rmb": 92274.43,
+      "evol_ca_pct": 49.81,
+      "diff_ca_rmb": 45966.03,
+      "vol_n_kg": 14928.36,
+      "vol_n1_kg": 9763.94,
+      "evol_vol_pct": 52.89,
+      "diff_vol_kg": 5164.42,
+      "gross_margin_rmb": 50015.02,
+      "gross_margin_rate_pct": 36.18,
+      "loss_cost_rmb": 8272.33,
+      "net_margin_rmb": 41742.81,
+      "net_margin_rate_pct": 30.2,
+      "discount_rate_pct": 3.06
+    },
+    {
+      "category": "Capsicum",
+      "ca_n_rmb": 255859.66,
+      "ca_n1_rmb": 209632.66,
+      "evol_ca_pct": 22.05,
+      "diff_ca_rmb": 46227.0,
+      "vol_n_kg": 43416.71,
+      "vol_n1_kg": 21479.72,
+      "evol_vol_pct": 102.13,
+      "diff_vol_kg": 21936.99,
+      "gross_margin_rmb": 110161.86,
+      "gross_margin_rate_pct": 43.06,
+      "loss_cost_rmb": 11825.35,
+      "net_margin_rmb": 98336.51,
+      "net_margin_rate_pct": 38.43,
+      "discount_rate_pct": 5.46
+    },
+    {
+      "category": "Edible Mushroom",
+      "ca_n_rmb": 214751.97,
+      "ca_n1_rmb": 150005.97,
+      "evol_ca_pct": 43.16,
+      "diff_ca_rmb": 64746.0,
+      "vol_n_kg": 32532.81,
+      "vol_n1_kg": 16251.13,
+      "evol_vol_pct": 100.19,
+      "diff_vol_kg": 16281.68,
+      "gross_margin_rmb": 77072.74,
+      "gross_margin_rate_pct": 35.89,
+      "loss_cost_rmb": 9340.77,
+      "net_margin_rmb": 67731.91,
+      "net_margin_rate_pct": 31.54,
+      "discount_rate_pct": 8.51
+    },
+    {
+      "category": "Flower/Leaf Vegetables",
+      "ca_n_rmb": 360041.86,
+      "ca_n1_rmb": 307379.08,
+      "evol_ca_pct": 17.13,
+      "diff_ca_rmb": 52662.78,
+      "vol_n_kg": 78897.81,
+      "vol_n1_kg": 48074.5,
+      "evol_vol_pct": 64.12,
+      "diff_vol_kg": 30823.31,
+      "gross_margin_rmb": 146456.36,
+      "gross_margin_rate_pct": 40.68,
+      "loss_cost_rmb": 21521.53,
+      "net_margin_rmb": 124935.02,
+      "net_margin_rate_pct": 34.7,
+      "discount_rate_pct": 7.46
+    },
+    {
+      "category": "Solanum",
+      "ca_n_rmb": 49675.96,
+      "ca_n1_rmb": 72514.41,
+      "evol_ca_pct": -31.5,
+      "diff_ca_rmb": -22838.45,
+      "vol_n_kg": 5512.86,
+      "vol_n1_kg": 7970.05,
+      "evol_vol_pct": -30.83,
+      "diff_vol_kg": -2457.19,
+      "gross_margin_rmb": 19390.04,
+      "gross_margin_rate_pct": 39.03,
+      "loss_cost_rmb": 1905.47,
+      "net_margin_rmb": 17484.51,
+      "net_margin_rate_pct": 35.2,
+      "discount_rate_pct": 0.21
+    }
+  ],
+  "top_10_loss_items": [
+    {
+      "item_code": "102900005116714",
+      "item_name": "Broccoli",
+      "category": "Cabbage",
+      "loss_cost_rmb": 5492.64,
+      "turnover_rmb": 89869.43,
+      "quantity_kg": 9022.27,
+      "loss_to_ca_pct": 6.11
+    },
+    {
+      "item_code": "102900005116530",
+      "item_name": "Xixia Mushroom (1)",
+      "category": "Edible Mushroom",
+      "loss_cost_rmb": 4404.19,
+      "turnover_rmb": 48958.84,
+      "quantity_kg": 2646.82,
+      "loss_to_ca_pct": 9.0
+    },
+    {
+      "item_code": "102900011030059",
+      "item_name": "Yunnan Lettuce (Bag)",
+      "category": "Flower/Leaf Vegetables",
+      "loss_cost_rmb": 3463.64,
+      "turnover_rmb": 60891.7,
+      "quantity_kg": 13570.0,
+      "loss_to_ca_pct": 5.69
+    },
+    {
+      "item_code": "102900011021842",
+      "item_name": "Honghu Lotus Root Powder (Fenou)",
+      "category": "Aquatic Tuberous Vegetables",
+      "loss_cost_rmb": 3076.54,
+      "turnover_rmb": 37429.6,
+      "quantity_kg": 3607.0,
+      "loss_to_ca_pct": 8.22
+    },
+    {
+      "item_code": "102900011016701",
+      "item_name": "Wuhu Green Pepper (1)",
+      "category": "Capsicum",
+      "loss_cost_rmb": 3056.12,
+      "turnover_rmb": 79680.07,
+      "quantity_kg": 10575.07,
+      "loss_to_ca_pct": 3.84
+    },
+    {
+      "item_code": "102900011034026",
+      "item_name": "Zhijiang Qinggengsanhua",
+      "category": "Cabbage",
+      "loss_cost_rmb": 2660.06,
+      "turnover_rmb": 47172.31,
+      "quantity_kg": 5782.2,
+      "loss_to_ca_pct": 5.64
+    },
+    {
+      "item_code": "102900011032251",
+      "item_name": "Luosi Pepper (Bag)",
+      "category": "Capsicum",
+      "loss_cost_rmb": 2080.18,
+      "turnover_rmb": 39398.6,
+      "quantity_kg": 8019.0,
+      "loss_to_ca_pct": 5.28
+    },
+    {
+      "item_code": "102900051000944",
+      "item_name": "Honghu Lotus Root",
+      "category": "Aquatic Tuberous Vegetables",
+      "loss_cost_rmb": 2049.88,
+      "turnover_rmb": 12829.53,
+      "quantity_kg": 471.97,
+      "loss_to_ca_pct": 15.98
+    },
+    {
+      "item_code": "102900005116899",
+      "item_name": "Net Lotus Root (1)",
+      "category": "Aquatic Tuberous Vegetables",
+      "loss_cost_rmb": 2029.02,
+      "turnover_rmb": 53919.91,
+      "quantity_kg": 8374.58,
+      "loss_to_ca_pct": 3.76
+    },
+    {
+      "item_code": "102900011030097",
+      "item_name": "Yunnan Leaf Lettuce (Bag)",
+      "category": "Flower/Leaf Vegetables",
+      "loss_cost_rmb": 1799.57,
+      "turnover_rmb": 32831.1,
+      "quantity_kg": 8100.0,
+      "loss_to_ca_pct": 5.48
+    }
+  ],
+  "solanum_breakdown": [
+    {
+      "item_code": "102900005116257",
+      "item_name": "Eggplant (2)",
+      "ca_n_rmb": 33346.11,
+      "ca_n1_rmb": 43328.93,
+      "evol_ca_pct": -23.04,
+      "vol_n_kg": 3822.62,
+      "vol_n1_kg": 4694.49
+    },
+    {
+      "item_code": "102900011022764",
+      "item_name": "Changxianqie",
+      "ca_n_rmb": 5430.59,
+      "ca_n1_rmb": 19236.81,
+      "evol_ca_pct": -71.77,
+      "vol_n_kg": 507.61,
+      "vol_n1_kg": 1886.47
+    },
+    {
+      "item_code": "102900005116509",
+      "item_name": "Green Eggplant (1)",
+      "ca_n_rmb": 5307.22,
+      "ca_n1_rmb": 6843.67,
+      "evol_ca_pct": -22.45,
+      "vol_n_kg": 565.77,
+      "vol_n1_kg": 1078.2
+    },
+    {
+      "item_code": "102900051000463",
+      "item_name": "Round Eggplant (2)",
+      "ca_n_rmb": 1101.49,
+      "ca_n1_rmb": 2467.16,
+      "evol_ca_pct": -55.35,
+      "vol_n_kg": 122.09,
+      "vol_n1_kg": 257.85
+    },
+    {
+      "item_code": "102900011016909",
+      "item_name": "Hua Eggplant",
+      "ca_n_rmb": 18.76,
+      "ca_n1_rmb": 550.49,
+      "evol_ca_pct": -96.59,
+      "vol_n_kg": 1.56,
+      "vol_n1_kg": 45.87
+    },
+    {
+      "item_code": "102900011000335",
+      "item_name": "Round Eggplant",
+      "ca_n_rmb": 7.13,
+      "ca_n1_rmb": 87.4,
+      "evol_ca_pct": -91.85,
+      "vol_n_kg": 0.51,
+      "vol_n1_kg": 7.15
+    },
+    {
+      "item_code": "102900011033975",
+      "item_name": "Green Eggplant (2)",
+      "ca_n_rmb": 1201.17,
+      "ca_n1_rmb": 0.0,
+      "evol_ca_pct": 0.0,
+      "vol_n_kg": 190.52,
+      "vol_n1_kg": 0.0
+    },
+    {
+      "item_code": "102900011033982",
+      "item_name": "Eggplant (1)",
+      "ca_n_rmb": 3237.7,
+      "ca_n1_rmb": 0.0,
+      "evol_ca_pct": 0.0,
+      "vol_n_kg": 297.16,
+      "vol_n1_kg": 0.0
+    },
+    {
+      "item_code": "102900011033999",
+      "item_name": "Round Eggplant (1)",
+      "ca_n_rmb": 25.9,
+      "ca_n1_rmb": 0.0,
+      "evol_ca_pct": 0.0,
+      "vol_n_kg": 4.98,
+      "vol_n1_kg": 0.0
+    }
+  ]
+}
