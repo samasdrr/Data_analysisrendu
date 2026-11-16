@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Présentation Exécutive Comex — Performance Produits Frais</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --slide-bg: #111827;
+      --card-bg: #1f2937;
+      --border: #374151;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --green: #10b981;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+    
+    .deck-container { width: 100%; max-width: 1050px; background: var(--slide-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); overflow: hidden; display: flex; flex-direction: column; min-height: 620px; position: relative; }
+    
+    .deck-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 30px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.2); }
+    .deck-logo { font-weight: 800; font-size: 1.1rem; color: #fff; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+    .deck-badge { background: rgba(56, 189, 248, 0.15); color: var(--accent); padding: 3px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .slide-counter { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+
+    .slide { display: none; padding: 36px 40px; flex-grow: 1; flex-direction: column; justify-content: space-between; }
+    .slide.active { display: flex; }
+
+    /* Slide Titles */
+    .slide-tag { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+    .slide-title { font-size: 1.85rem; font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 24px; }
+    .slide-subtitle { color: var(--muted); font-size: 1.05rem; margin-top: -16px; margin-bottom: 24px; }
+
+    /* Cards & Grids */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+    .card-highlight-red { border-color: rgba(239, 68, 68, 0.6); background: rgba(239, 68, 68, 0.05); }
+    .card-highlight-blue { border-color: rgba(56, 189, 248, 0.6); background: rgba(56, 189, 248, 0.05); }
+    
+    .big-stat { font-size: 2.4rem; font-weight: 800; color: #fff; margin: 10px 0; }
+    .stat-label { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+    .stat-diff { font-size: 0.9rem; font-weight: 700; }
+    .stat-diff.green { color: var(--green); }
+    .stat-diff.red { color: var(--red); }
+
+    /* Callout */
+    .callout { background: rgba(56, 189, 248, 0.1); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 0 8px 8px 0; margin-top: 18px; font-size: 0.92rem; color: #e0f2fe; }
+    .callout-red { background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--red); color: #fee2e2; }
+
+    /* Navigation Bar */
+    .deck-footer { display: flex; justify-content: space-between; align-items: center; padding: 16px 30px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.2); }
+    .btn { background: #374151; color: #fff; border: none; padding: 8px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .btn:hover { background: #4b5563; }
+    .btn-primary { background: var(--accent); color: #0b0f19; font-weight: 700; }
+    .btn-primary:hover { background: #7dd3fc; }
+
+    /* Print styles */
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .deck-container { border: none; box-shadow: none; max-width: 100%; }
+      .deck-header, .deck-footer { display: none; }
+      .slide { display: flex !important; page-break-after: always; min-height: 100vh; padding: 40px; background: #fff; color: #000; }
+      .card { background: #f3f4f6; border-color: #d1d5db; color: #000; }
+      .big-stat, .slide-title { color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+    
+    <!-- HEADER -->
+    <div class="deck-header">
+      <div class="deck-logo">
+        <span>🥕 RETAIL FRESH ANALYTICS</span>
+        <span class="deck-badge">COMEX RESTITUTION</span>
+      </div>
+      <div class="slide-counter" id="counter">Slide 1 / 6</div>
+    </div>
+
+    <!-- SLIDE 1 : COUVERTURE -->
+    <div class="slide active" id="slide-1">
+      <div>
+        <div class="slide-tag">Restitution Stratégique • Direction Générale</div>
+        <h1 class="slide-title" style="font-size: 2.5rem; margin-top: 10px;">Performance du Rayon Produits Frais :<br><span style="color: var(--accent);">Diagnostic & Plan d'Action d'Urgence</span></h1>
+        <p class="slide-subtitle">Réponse à la problématique Comex : <em>"Ce qui bloque sur nos ventes et où agir dès demain."</em></p>
+        
+        <div class="grid-3" style="margin-top: 40px;">
+          <div class="card">
+            <div class="stat-label">Périmètre Analysé</div>
+            <div class="big-stat" style="font-size: 1.8rem;">878 503</div>
+            <div style="font-size: 0.85rem; color: var(--muted);">Transactions de caisse réelles</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Fenêtre d'Analyse</div>
+            <div class="big-stat" style="font-size: 1.8rem;">12 Mois</div>
+            <div style="font-size: 0.85rem; color: var(--muted);">Juil 2022 - Juin 2023 vs N-1</div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Catégories Couvertes</div>
+            <div class="big-stat" style="font-size: 1.8rem;">6 Segments</div>
+            <div style="font-size: 0.85rem; color: var(--muted);">251 Références au catalogue</div>
+          </div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>L'essentiel en 3 secondes :</strong> Le chiffre d'affaires global progresse de <strong>+24.2%</strong> mais cache un blocage critique : l'effondrement sévère du segment <strong>Solanum (-31.5%)</strong> et une hémorragie de <strong>63 040 RMB en casse</strong> (notamment sur les légumes feuilles).
+      </div>
+    </div>
+
+    <!-- SLIDE 2 : DYNAMIQUE GLOBALE & LE PARADOXE DU MIX -->
+    <div class="slide" id="slide-2">
+      <div>
+        <div class="slide-tag">1. Vue d'Ensemble</div>
+        <h2 class="slide-title">Un Volume en Forte Hausse (+66%), mais un CA Freiné (+24%)</h2>
+        <div class="grid-2">
+          <div class="card card-highlight-blue">
+            <div class="stat-label">Chiffre d'Affaires Net Période N</div>
+            <div class="big-stat">1.15 M <span style="font-size: 1.1rem; color: var(--muted);">RMB</span></div>
+            <div class="stat-diff green">▲ +24.2% vs N-1 (+224.5k RMB)</div>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-top: 10px;">La progression commerciale reste solide en surface mais portée quasi-exclusivement par 3 catégories motrices.</p>
+          </div>
+          <div class="card">
+            <div class="stat-label">Tonnage Vendu Période N</div>
+            <div class="big-stat">191.9 <span style="font-size: 1.1rem; color: var(--muted);">Tonnes</span></div>
+            <div class="stat-diff green">▲ +66.3% vs N-1 (+76.5 tonnes)</div>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-top: 10px;">Le prix moyen au kilo vendu a chuté de <strong>8.06 RMB/kg</strong> à <strong>6.01 RMB/kg (-25.4%)</strong> suite à des baisses tarifaires et des décalages de mix produit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Insight Clé pour le Directeur :</strong> Les clients achètent davantage en quantité, mais sur des produits à plus faible valeur unitaire. Notre croissance de marge brute (+24%) est freinée par l'érosion du panier moyen au kilo.
+      </div>
+    </div>
+
+    <!-- SLIDE 3 : CE QUI BLOQUE : L'EFFONDREMENT DES SOLANUM -->
+    <div class="slide" id="slide-3">
+      <div>
+        <div class="slide-tag">2. Diagnostic d'Urgence</div>
+        <h2 class="slide-title">Ce qui bloque : L'Effondrement des Solanacées (Aubergines)</h2>
+        <div class="grid-2">
+          <div class="card card-highlight-red">
+            <div class="stat-label">Catégorie Solanum (Aubergines)</div>
+            <div class="big-stat" style="color: #f87171;">49.7 k <span style="font-size: 1.1rem; color: var(--muted);">RMB</span></div>
+            <div class="stat-diff red">▼ -31.5% de Chiffre d'Affaires (-22.8k RMB)</div>
+            <div class="stat-diff red" style="margin-top: 4px;">▼ -30.8% de Volume Vendu (5.5t vs 8.0t)</div>
+            <div class="callout-red" style="margin-top: 14px; font-size: 0.85rem;">
+              <strong>Seule catégorie dans le rouge</strong> de tout le rayon frais.
+            </div>
+          </div>
+          <div class="card">
+            <div class="stat-label">Causes Racines Identifiées dans les Données</div>
+            <ul style="margin-top: 12px; margin-left: 20px; font-size: 0.9rem; line-height: 1.6; color: #e5e7eb;">
+              <li><strong>Chute du produit vedette :</strong> La variété <em>Changxianqie</em> s'est effondrée de <strong>19 237 RMB à 5 431 RMB (-71.8%)</strong>.</li>
+              <li><strong>Zéro animation commerciale :</strong> Taux de promotion de <strong>0.2%</strong> (vs 6.3% moyenne magasin et 8.5% pour les champignons).</li>
+              <li><strong>Cannibalisation ratée :</strong> Les nouveaux codes introduits n'ont pas compensé la perte des références historiques.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="callout-red">
+        <strong>Décision requise :</strong> Solanum nécessite un repositionnement prix immédiat et une campagne promotionnelle de relance pour stopper l'attrition des clients vers la concurrence.
+      </div>
+    </div>
+
+    <!-- SLIDE 4 : L'HEMORRAGIE DE CASSE / DEMARQUE -->
+    <div class="slide" id="slide-4">
+      <div>
+        <div class="slide-tag">3. Rentabilité Réelle</div>
+        <h2 class="slide-title">L'Hémorragie de la Casse : 63 040 RMB Détruits</h2>
+        <div class="grid-3">
+          <div class="card">
+            <div class="stat-label">Coût Global de la Casse</div>
+            <div class="big-stat" style="color: #f87171;">63 040 <span style="font-size: 1rem;">RMB</span></div>
+            <p style="font-size: 0.85rem; color: var(--muted);">Représente <strong>5.46%</strong> du CA net et <strong>14.1%</strong> de la marge brute totale.</p>
+          </div>
+          <div class="card card-highlight-red">
+            <div class="stat-label">Poche de Perte n°1 : Légumes Feuilles</div>
+            <div class="big-stat" style="color: #f87171;">21 522 <span style="font-size: 1rem;">RMB</span></div>
+            <p style="font-size: 0.85rem; color: var(--muted);"><strong>34.1% de toute la casse</strong> du magasin est concentrée sur Flower/Leaf Veg.</p>
+          </div>
+          <div class="card">
+            <div class="stat-label">Top Produit Casse : Broccoli</div>
+            <div class="big-stat" style="color: #f87171;">5 493 <span style="font-size: 1rem;">RMB</span></div>
+            <p style="font-size: 0.85rem; color: var(--muted);">6.1% de perte sèche sur ce seul produit malgré un CA de 89.8k RMB.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Insight Clé pour le Directeur :</strong> Traiter la casse est le moyen le plus rapide d'augmenter le résultat net : chaque euro ou RMB de casse économisé se transforme directement en <strong>100% de profit net</strong> pour l'entreprise.
+      </div>
+    </div>
+
+    <!-- SLIDE 5 : MATRICE DECISIONNELLE CATEGORIE -->
+    <div class="slide" id="slide-5">
+      <div>
+        <div class="slide-tag">4. Matrice Stratégique</div>
+        <h2 class="slide-title">Cartographie des Catégories : Où Investir vs Où Intervenir</h2>
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 10px;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border); text-align: left; color: var(--muted);">
+              <th style="padding: 10px;">Catégorie</th>
+              <th style="text-align: right; padding: 10px;">CA N (RMB)</th>
+              <th style="text-align: right; padding: 10px;">Croissance CA</th>
+              <th style="text-align: right; padding: 10px;">Taux Casse</th>
+              <th style="text-align: right; padding: 10px;">Marge Nette</th>
+              <th style="padding: 10px 15px;">Diagnostic Stratégique</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 10px;"><strong>Flower/Leaf Veg.</strong></td>
+              <td style="text-align: right; padding: 10px;">360 042</td>
+              <td style="text-align: right; color: var(--green); padding: 10px;">+17.1%</td>
+              <td style="text-align: right; color: #f87171; padding: 10px;">6.0%</td>
+              <td style="text-align: right; padding: 10px; font-weight:700;">124 935</td>
+              <td style="padding: 10px 15px;"><span style="color: var(--accent);">Vache à lait</span> • Réduire impérativement la casse (21.5k)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 10px;"><strong>Capsicum</strong></td>
+              <td style="text-align: right; padding: 10px;">255 860</td>
+              <td style="text-align: right; color: var(--green); padding: 10px;">+22.1%</td>
+              <td style="text-align: right; padding: 10px;">4.6%</td>
+              <td style="text-align: right; padding: 10px; font-weight:700;">98 337</td>
+              <td style="padding: 10px 15px;"><span style="color: var(--green);">Moteur de rentabilité</span> • Taux de marge brute 43.1%</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+              <td style="padding: 10px;"><strong>Edible Mushroom</strong></td>
+              <td style="text-align: right; padding: 10px;">214 752</td>
+              <td style="text-align: right; color: var(--green); padding: 10px;">+43.2%</td>
+              <td style="text-align: right; padding: 10px;">4.3%</td>
+              <td style="text-align: right; padding: 10px; font-weight:700;">67 732</td>
+              <td style="padding: 10px 15px;"><span style="color: var(--green);">Forte dynamique</span> • Volumes doublés grâce aux promos</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(239, 68, 68, 0.08);">
+              <td style="padding: 10px; color: #fca5a5;"><strong>Solanum (Aubergines)</strong></td>
+              <td style="text-align: right; padding: 10px; color: #fca5a5;">49 676</td>
+              <td style="text-align: right; color: var(--red); padding: 10px; font-weight:700;">-31.5%</td>
+              <td style="text-align: right; padding: 10px;">3.8%</td>
+              <td style="text-align: right; padding: 10px; font-weight:700; color: #fca5a5;">17 485</td>
+              <td style="padding: 10px 15px; color: #fca5a5;"><strong>🚨 Point de blocage critique</strong> • Relance d'urgence requise</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <strong>Constat Comex :</strong> 5 catégories sur 6 sont saines et en croissance. Le problème du rayon n'est pas structurel mais très ciblé : il se focalise sur les <strong>Solanum</strong> et sur la <strong>casse des légumes feuilles</strong>.
+      </div>
+    </div>
+
+    <!-- SLIDE 6 : RECOMMANDATIONS EN 3 SECONDES -->
+    <div class="slide" id="slide-6">
+      <div>
+        <div class="slide-tag">5. Plan d'Action Actionnable</div>
+        <h2 class="slide-title">3 Décisions Comex à Prendre en 3 Secondes Chrono</h2>
+        
+        <div class="grid-3" style="margin-top: 20px;">
+          <div class="card card-highlight-red">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #f87171; margin-bottom: 8px;">Action 1</div>
+            <div style="font-weight: 700; font-size: 1.05rem; color: #fff; margin-bottom: 8px;">Relancer les Solanum</div>
+            <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.5;">
+              • Aligner le prix de vente sur les concurrents.<br>
+              • Programmer une promo tête de gondole dès ce week-end (actuellement 0.2% de promo).<br>
+              <strong>Gain visé : +15 000 RMB de CA</strong>
+            </p>
+          </div>
+
+          <div class="card card-highlight-blue">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-bottom: 8px;">Action 2</div>
+            <div style="font-weight: 700; font-size: 1.05rem; color: #fff; margin-bottom: 8px;">Plan Anti-Casse Feuilles</div>
+            <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.5;">
+              • Réduire les lots de commande à J-1.<br>
+              • Déstockage systématique à -30% à partir de 19h sur les salades et brocolis.<br>
+              <strong>Gain visé : +8 000 RMB de marge nette</strong>
+            </p>
+          </div>
+
+          <div class="card">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--green); margin-bottom: 8px;">Action 3</div>
+            <div style="font-weight: 700; font-size: 1.05rem; color: #fff; margin-bottom: 8px;">Optimisation Mix Prix</div>
+            <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.5;">
+              • Hausse ciblée de +3 à +5% sur les poivrons et champignons (élasticité prix très faible).<br>
+              • Restauration du panier moyen au kg.<br>
+              <strong>Gain visé : +12 000 RMB de marge brute</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="callout" style="border-left-color: var(--green); background: rgba(16, 185, 129, 0.1); color: #d1fae5;">
+        <strong>Impact total estimé du plan d'action : +35 000 RMB de marge nette annuelle supplémentaire</strong> dès le prochain trimestre.
+      </div>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <div class="deck-footer">
+      <button class="btn" id="prevBtn" onclick="changeSlide(-1)">← Précédent</button>
+      <div style="font-size: 0.8rem; color: var(--muted);">Utilisez les flèches du clavier ← → ou les boutons</div>
+      <button class="btn btn-primary" id="nextBtn" onclick="changeSlide(1)">Suivant →</button>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 6;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      currentSlide = index;
+
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById(`slide-${i}`);
+        if (slide) slide.classList.toggle('active', i === currentSlide);
+      }
+
+      document.getElementById('counter').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+      document.getElementById('prevBtn').disabled = (currentSlide === 1);
+      document.getElementById('prevBtn').style.opacity = (currentSlide === 1) ? '0.4' : '1';
+      document.getElementById('nextBtn').innerText = (currentSlide === totalSlides) ? 'Terminer ✓' : 'Suivant →';
+    }
+
+    function changeSlide(direction) {
+      showSlide(currentSlide + direction);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+      if (e.key === 'ArrowLeft') changeSlide(-1);
+    });
+
+    showSlide(1);
+  </script>
+</body>
+</html>
