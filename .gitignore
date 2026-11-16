@@ -1,0 +1,7 @@
+# Fichiers volumineux bruts (> 50 Mo recommandation GitHub)
+transaction*.csv
+*.pyc
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+*.log

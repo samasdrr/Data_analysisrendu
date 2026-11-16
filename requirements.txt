@@ -1,0 +1,5 @@
+# Dépendances du projet (le pipeline de base utilise la librairie standard pour une portabilité maximale)
+# Pour étendre les analyses ou exécuter flake8 / black / pytest dans la CI/CD :
+pytest>=7.0.0
+flake8>=6.0.0
+black>=23.0.0
